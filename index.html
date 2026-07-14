@@ -3,9 +3,101 @@
 <head>
 	<meta charset="UTF-8"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-	<title>NoPlayer - Static test app</title>
+	<title>NoPlayer - Coming Late</title>
+	<style>
+		* {
+			box-sizing: border-box;
+		}
+
+		html, body {
+			height: 100%;
+			margin: 0;
+		}
+
+		body {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+			background: radial-gradient(circle at 50% 30%, #1b1f2a 0%, #0a0c10 70%);
+			color: #f4f4f5;
+			text-align: center;
+			padding: 24px;
+		}
+
+		.card {
+			max-width: 480px;
+		}
+
+		.spinner {
+			width: 64px;
+			height: 64px;
+			margin: 0 auto 28px;
+			border-radius: 50%;
+			border: 5px solid rgba(255, 255, 255, 0.12);
+			border-top-color: #7c5cff;
+			animation: spin 1s linear infinite;
+		}
+
+		@keyframes spin {
+			to { transform: rotate(360deg); }
+		}
+
+		h1 {
+			font-size: 1.9rem;
+			margin: 0 0 12px;
+			letter-spacing: -0.02em;
+		}
+
+		h1 span {
+			color: #7c5cff;
+		}
+
+		p {
+			margin: 0 0 6px;
+			color: #b7bac2;
+			line-height: 1.5;
+		}
+
+		.buffering {
+			display: inline-block;
+			width: 1.5em;
+			text-align: left;
+		}
+
+		.percent {
+			margin-top: 20px;
+			font-size: 0.85rem;
+			color: #6b6f7a;
+			letter-spacing: 0.05em;
+			text-transform: uppercase;
+		}
+	</style>
 </head>
 <body>
-	Static test app
+	<div class="card">
+		<div class="spinner"></div>
+		<h1><span>NoPlayer</span> is running a little late</h1>
+		<p>Buffering<span class="buffering" id="dots">...</span></p>
+		<p>Fashionably behind schedule, as always.</p>
+		<p class="percent" id="percent">Loading forever&hellip; 0%</p>
+	</div>
+
+	<script>
+		const dotsEl = document.getElementById("dots");
+		const dotFrames = ["", ".", "..", "..."];
+		let dotIndex = 0;
+		setInterval(() => {
+			dotIndex = (dotIndex + 1) % dotFrames.length;
+			dotsEl.textContent = dotFrames[dotIndex];
+		}, 500);
+
+		const percentEl = document.getElementById("percent");
+		let percent = 0;
+		setInterval(() => {
+			percent = percent >= 99 ? 12 : percent + 1;
+			percentEl.textContent = "Loading forever… " + percent + "%";
+		}, 120);
+	</script>
 </body>
 </html>
